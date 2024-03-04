@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- BS 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom JS -->
+    <link rel="stylesheet" href="./styles.css">
+    <!-- Custom JS -->
+    <script src="./main.js"></script>
+</head>  
+
+<body>
+    <div class="container">
+        <div id="alert" class="alert-dismissible d-flex justify-content-between" >
+            <p id="alertMsg" hidden><strong id="alertTitle">Success!</strong></p>
+            <a id="alertClose" href="#" class="close" data-dismiss="alert" aria-label="close" hidden>&times;</a>
+          </div> 
+
+        <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="feed-tab" data-bs-toggle="tab" data-bs-target="#feed-tab-pane"
+                    type="button" role="tab" aria-controls="feed-tab-pane" aria-selected="false" disabled>View Product</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="my-tweets-tab" data-bs-toggle="tab" data-bs-target="#my-tweets-tab-pane"
+                    type="button" role="tab" aria-controls="my-tweets-tab-pane" aria-selected="false" disabled onclick="getMyTweets()">Add
+                    Products</button>
+            </li>
+            <li class="nav-item ms-auto" role="presentation">
+                <button class="nav-link active" id="sign-in-tab" data-bs-toggle="tab" data-bs-target="#sign-in-tab-pane"
+                    type="button" role="tab" aria-controls="sign-in-tab-pane" aria-selected="true">Sign In</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sign-up-tab" data-bs-toggle="tab" data-bs-target="#sign-up-tab-pane"
+                    type="button" role="tab" aria-controls="sign-up-tab-pane" aria-selected="false">Sign Up</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="logout-btn" id="logout-tab" type="button" role="tab" aria-controls="logout-tab-pane" aria-selected="false" hidden onclick="logout()">Logout</button>
+            </li>
+        </ul>
+  
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="feed-tab-pane" role="tabpanel" aria-labelledby="feed-tab" tabindex="0">
+       
+	<div class="wrapper">
+		<div class="wrapper2">
+			<div class="main-form">
+				<form class="form-wrapper" action="/post"><!--action="/post">-->
+					<textarea id="body" class="form-control " placeholder="What's in your mind?" maxlength="280" minlength="4" name="post" required></textarea>
+					<input class="tweet-button btn btn-primary " type="button" value="Post" onclick="addTweet()">
+				</form>
+			</div>
+				<div class="tweets">
+			  			      
+			      <ul id="allTweetsList" class="list-group"></ul>
+
+      		</div>
+		</div>
+	</div>
+               
+               
+            </div>
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                 <div class="profile-container">
+        <h1>Profile</h1>
+        <hr>
+        <div class="profile-image" >
+            <img src="https://www.pngarts.com/files/5/User-Avatar-PNG-Transparent-Image.png" id="profile-image" width="300px" class="img-fluid rounded-start" alt="">
+        </div>
+        
+        <div class="edit-btn">
+            
+            <button class="btn btn-primary" type="button" onclick='onEdit()'><span class="iconamoon--edit-light"></span></button>
+        </div>
+        <div id='input' class="input">
+            <span>Name:</span><p id="name-text">Yadnesh Wani</p>
+            <span>Email:</span><p id="email-text">Yadneshwani0987@email.com</p>
+            <span>Password:</span><p id="pass-text">yadnesh@123</p>
+            <span>BIO:</span><p id="bio-text">Hi i am Yadnesh Wani</p>
+        </div>
+
+        <div  hidden id='edit-input' class="edit-input">
+            <p>Name</p>
+            <div class="input-group my-3">
+            <input id="nameTextBox" type="text" class="form-control" placeholder="Enter Name"
+                    oninput="textChange(event)">
+       
+    
+            </div>
+            <p>Email</p>
+            <div class="input-group my-3">
+                <input id="emailTextBox" type="text" class="form-control" placeholder="Email"
+                    oninput="textChange(event)">
+  
+            </div>
+            <p>Password</p>
+            <div class="input-group my-3">
+                <input id="passTextBox" type="text" class="form-control" placeholder="Password"
+                    oninput="textChange(event)">
+                 
+            </div>
+            <p>Bio</p>
+            <div class="input-group my-3">
+                <input id="bioTextBox" type="text" class="form-control" placeholder="BIO"
+                    oninput="textChange(event)">
+   
+            </div>
+
+            <p>Avatar URL</p>
+            <div class="input-group my-3">
+                <input id="AvatarTextBox" type="text" class="form-control" placeholder="Avatar"
+                    oninput="textChange(event)">
+   
+            </div>
+        
+        </div>
+        <button class="btn btn-success" type="button" id="nameSubmitButton" onclick="onSave()"
+            value="-1">Save</button>
+
+    </div>
+            </div>
+            <div class="tab-pane fade" id="my-tweets-tab-pane" role="tabpanel" aria-labelledby="my-tweets-tab"
+                tabindex="0">
+                <div class="tweets">
+			  			      
+			      <ul id="myTweetsList" class="list-group"></ul>
+
+      		</div>
+            </div>
+            <div class="tab-pane fade show active" id="sign-in-tab-pane" role="tabpanel" aria-labelledby="sign-in-tab"
+                tabindex="0">
+               
+                    <div class="mb-3">
+                        <label for="signInEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="signInEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signInPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signInPassword" placeholder="Password" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="signInSubmit" onclick="signIn()">Submit</button>
+               
+            </div>
+            <div class="tab-pane fade" id="sign-up-tab-pane" role="tabpanel" aria-labelledby="sign-up-tab" tabindex="0">
+               
+                    <div class="mb-3">
+                        <label for="signUpName" class="form-label" >User Name</label>
+                        <input type="text" class="form-control" id="signUpName" placeholder="Enter username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signUpEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="signUpEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signUpPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signUpPassword" placeholder="Password" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="signUpSubmit" onclick="signUp()">Submit</button>
+               
+            </div>
+        </div>
+        </div>
+    <!-- BS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+       
+
+</body>
+
+</html>
